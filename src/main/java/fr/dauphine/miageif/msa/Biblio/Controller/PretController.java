@@ -8,6 +8,8 @@ import fr.dauphine.miageif.msa.Biblio.Repository.PretRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Date;
+import java.util.ArrayList;
 
 @RestController
 @Transactional
@@ -19,61 +21,77 @@ public class PretController {
     @Autowired
     private PretRepository repository;
 
-    /*@GetMapping("livres/isbn/{isbn}")
-    public Pret findByIsbn(@PathVariable String isbn){
-        Pret livre = repository.findByIsbn(isbn);
-        return livre;
+    @GetMapping("prets/lecteur/{lecteur}")
+    public List<Pret> findByIdLecteur(@PathVariable Long lecteur){
+        List<Pret> prets = repository.findAllByLecteur(lecteur);
+        return prets;
     }
 
-    @GetMapping("livres/auteur/{auteur}")
-    public List<Pret> findByAuteur(@PathVariable String auteur){
-        List<Pret> livres = repository.findAllByAuteur(auteur);
-        return livres;
+    @GetMapping("prets/isbn/{isbn}")
+    public List<Pret> findByIsbn(@PathVariable String isbn){
+        List<Pret> prets = repository.findAllByIsbn(isbn);
+        return prets;
     }
 
-    @DeleteMapping("livres/isbn/{isbn}")
-    public String deleteByIsbn(@PathVariable String isbn){
-        repository.deleteByIsbn(isbn);
-        return "Le livre ayant l'ISBN "+isbn+" a été supprimé de la base de données";
+    @GetMapping("prets/lecteur/{lecteur}/isbn/{isbn}")
+    public Pret findByIdLecteurAndByIsbn(@PathVariable Long lecteur, @PathVariable String isbn){
+        Pret pret = repository.findAllByLecteurAndIsbn(lecteur, isbn);
+        return pret;
+    }
+
+    @GetMapping("prets/date/{datepret}")
+    public List<Pret> findAllByDate(@PathVariable Date datepret){
+        List<Pret> prets = repository.findAllByDatepret(datepret);
+        return prets;
+    }
+
+    @GetMapping("prets/encours/")
+    public List<Pret> findAllEnCours(){
+        List<Pret> prets = repository.findAll();
+        List<Pret> encours = new ArrayList<Pret>();
+
+        for (Pret p:
+             prets) {
+            if(p.getDate_retour().equals("")){
+                encours.add(p);
+            }
+        }
+        return encours;
     }
 
 
     //HEADER : 'Content-type: application/json'
-    @PutMapping("livres/isbn/{isbn}")
-    public String updateLivre(@RequestBody Pret livre, @PathVariable String isbn) {
-        if (!repository.existsByIsbn(isbn)){
-            return "Le livre n'existe pas dans la base de données !";
+    @PutMapping("prets/lecteur/{lecteur}/isbn/{isbn}")
+    public String updatePret(@RequestBody Pret pret, @PathVariable String isbn, @PathVariable Long lecteur) {
+        if (!repository.existsByLecteurAndIsbn(isbn, lecteur)){
+            return "Le pret n'existe pas dans la base de données !";
         }else{
-            Pret livreEnBase = repository.findByIsbn(isbn);
-            if(livre.getAuteur() == null){
-                livre.setAuteur(livreEnBase.getAuteur());
+            Pret pretEnBase = repository.findAllByLecteurAndIsbn(lecteur, isbn);
+            if(pret.getIsbn() == null){
+                pret.setIsbn(pretEnBase.getIsbn());
             }
-            if(livre.getEditeur() == null){
-                livre.setEditeur(livreEnBase.getEditeur());
+            if(pret.getLecteur() == null){
+                pret.setLecteur(pretEnBase.getLecteur());
             }
-            if(livre.getEdition() == null){
-                livre.setEdition(livreEnBase.getEdition());
+            if(pret.getDate_pret() == null){
+                pret.setDate_pret(pretEnBase.getDate_pret());
             }
-            if(livre.getTitre() == null){
-                livre.setTitre(livreEnBase.getTitre());
+            if(pret.getDate_retour() == null){
+                pret.setDate_retour(pretEnBase.getDate_retour());
             }
-            repository.save(livre);
-            return "Le livre ayant l'ISBN "+isbn+" a été mis à jour avec succès";
+            repository.save(pret);
+            return "Le prêt ayant l'ISBN "+isbn+" et l'idLecteur "+lecteur+" a été mis à jour avec succès";
         }
-
-
-
-
     }
 
-    @PostMapping("livres/")
-    public String addLivre(@RequestBody Pret livre){
-        if (repository.existsByIsbn(livre.getIsbn()))
-            return "Le livre existe déjà dans la base de données !";
+    @PostMapping("prets/")
+    public String addPret(@RequestBody Pret pret){
+        if (repository.existsByLecteurAndIsbn(pret.getIsbn(), pret.getLecteur()))
+            return "Le pret existe déjà dans la base de données !";
 
-        repository.save(livre);
-        return "Le livre a été enregistré avec succès";
-    }*/
+        repository.save(pret);
+        return "Le pret a été enregistré avec succès";
+    }
 
 
 }

@@ -2,6 +2,7 @@ package fr.dauphine.miageif.msa.Biblio;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Date;
 import java.util.Objects;
@@ -10,21 +11,66 @@ import java.util.Objects;
 public class Pret {
 
     @Id
-    private String id;
+    @GeneratedValue
+    private Long id;
 
     @Column(name="isbn")
     private String isbn;
 
     @Column(name="lecteur")
-    private String lecteur;
+    private Long lecteur;
 
-    @Column(name="date_pret")
-    private Date date_pret;
+    @Column(name="datepret")
+    private Date datepret;
 
-    @Column(name="date_retour")
-    private Date date_retour;
+    @Column(name="dateretour")
+    private Date dateretour;
 
+    public Pret(Long id, String isbn, Long lecteur, Date date_pret, Date date_retour) {
+        this.id = id;
+        this.isbn = isbn;
+        this.lecteur = lecteur;
+        this.datepret = date_pret;
+        this.dateretour = date_retour;
+    }
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public Long getLecteur() {
+        return lecteur;
+    }
+
+    public void setLecteur(Long lecteur) {
+        this.lecteur = lecteur;
+    }
+
+    public Date getDate_pret() {
+        return datepret;
+    }
+
+    public void setDate_pret(Date date_pret) {
+        this.datepret = date_pret;
+    }
+
+    public Date getDate_retour() {
+        return dateretour;
+    }
+
+    public void setDate_retour(Date date_retour) {
+        this.dateretour = date_retour;
+    }
 }
