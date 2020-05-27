@@ -80,7 +80,7 @@ public class PretController {
                 pret.setDate_retour(pretEnBase.getDate_retour());
             }
             repository.save(pret);
-            return "Le prêt ayant l'ISBN "+isbn+" et l'idLecteur "+lecteur+" a été mis à jour avec succès";
+            return "Le prêt ayant l'ISBN "+isbn+" et le lecteur "+lecteur+" a été mis à jour avec succès";
         }
     }
 

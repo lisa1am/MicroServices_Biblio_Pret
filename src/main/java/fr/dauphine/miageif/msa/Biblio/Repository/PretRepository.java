@@ -18,5 +18,5 @@ public interface PretRepository extends JpaRepository<Pret, Long> {
 
     List<Pret> findAll();
 
-    boolean existsByLecteurAndIsbn( Long lecteur, String isbn);
+    boolean existsByLecteurAndIsbn(Long lecteur, String isbn);
 }

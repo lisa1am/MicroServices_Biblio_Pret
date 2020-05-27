@@ -20,19 +20,19 @@ public class Pret {
     @Column(name="lecteur")
     private Long lecteur;
 
-    @Column(name="datepret")
+    @Column(name="date_pret")
     private Date datepret;
 
-    @Column(name="dateretour")
+    @Column(name="date_retour")
     private Date dateretour;
 
     public Pret(){}
 
-    public Pret(String isbn, Long lecteur, Date date_pret, Date date_retour) {
+    public Pret(String isbn, Long lecteur, Date datepret, Date dateretour) {
         this.isbn = isbn;
         this.lecteur = lecteur;
-        this.datepret = date_pret;
-        this.dateretour = date_retour;
+        this.datepret = datepret;
+        this.dateretour = dateretour;
     }
 
     public Long getId() {
