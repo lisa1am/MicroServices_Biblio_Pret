@@ -44,14 +44,33 @@ public class LivreController {
 
     //HEADER : 'Content-type: application/json'
     @PutMapping("livres/isbn/{isbn}")
-    public String updateLivre(@RequestBody Livre livre, @PathVariable String isbn) {
-        if (!repository.existsByIsbn(isbn))
+    public String updateLivre(@RequestBody Livre livre) {
+        if (!repository.existsByIsbn(livre.getIsbn())){
             return "Le livre n'existe pas dans la base de données !";
+        }else{
+            Livre livreEnBase = repository.findByIsbn(livre.getIsbn());
+            if(livre.getIsbn() == null){
+                livre.setIsbn(livreEnBase.getIsbn());
+            }
+            if(livre.getAuteur() == null){
+                livre.setAuteur(livreEnBase.getAuteur());
+            }
+            if(livre.getEditeur() == null){
+                livre.setEditeur(livreEnBase.getEditeur());
+            }
+            if(livre.getEdition() == null){
+                livre.setEdition(livreEnBase.getEdition());
+            }
+            if(livre.getTitre() == null){
+                livre.setTitre(livreEnBase.getTitre());
+            }
+            repository.save(livre);
+            return "Le livre ayant l'ISBN "+livre.getIsbn()+" a été mis à jour avec succès";
+        }
 
-        //Livre livreEnBase = repository.findByIsbn(isbn);
-        livre.setIsbn(isbn);
-        repository.save(livre);
-        return "Le livre ayant l'ISBN "+isbn+" a été mis à jour avec succès";
+
+
+
     }
 
     @PostMapping("livres/")
