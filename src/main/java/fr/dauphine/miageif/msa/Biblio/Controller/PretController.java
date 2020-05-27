@@ -19,7 +19,7 @@ public class PretController {
     @Autowired
     private PretRepository repository;
 
-    @GetMapping("livres/isbn/{isbn}")
+    /*@GetMapping("livres/isbn/{isbn}")
     public Pret findByIsbn(@PathVariable String isbn){
         Pret livre = repository.findByIsbn(isbn);
         return livre;
@@ -73,7 +73,7 @@ public class PretController {
 
         repository.save(livre);
         return "Le livre a été enregistré avec succès";
-    }
+    }*/
 
 
 }
