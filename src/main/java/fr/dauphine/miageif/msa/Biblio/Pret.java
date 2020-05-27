@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Objects;
 
 @Entity
@@ -26,8 +26,9 @@ public class Pret {
     @Column(name="dateretour")
     private Date dateretour;
 
-    public Pret(Long id, String isbn, Long lecteur, Date date_pret, Date date_retour) {
-        this.id = id;
+    public Pret(){}
+
+    public Pret(String isbn, Long lecteur, Date date_pret, Date date_retour) {
         this.isbn = isbn;
         this.lecteur = lecteur;
         this.datepret = date_pret;

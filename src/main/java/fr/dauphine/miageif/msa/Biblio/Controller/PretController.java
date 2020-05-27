@@ -8,7 +8,7 @@ import fr.dauphine.miageif.msa.Biblio.Repository.PretRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Date;
+import java.sql.Date;
 import java.util.ArrayList;
 
 @RestController
@@ -63,7 +63,7 @@ public class PretController {
     //HEADER : 'Content-type: application/json'
     @PutMapping("prets/lecteur/{lecteur}/isbn/{isbn}")
     public String updatePret(@RequestBody Pret pret, @PathVariable String isbn, @PathVariable Long lecteur) {
-        if (!repository.existsByLecteurAndIsbn(isbn, lecteur)){
+        if (!repository.existsByLecteurAndIsbn(lecteur, isbn)){
             return "Le pret n'existe pas dans la base de données !";
         }else{
             Pret pretEnBase = repository.findAllByLecteurAndIsbn(lecteur, isbn);
@@ -86,7 +86,7 @@ public class PretController {
 
     @PostMapping("prets/")
     public String addPret(@RequestBody Pret pret){
-        if (repository.existsByLecteurAndIsbn(pret.getIsbn(), pret.getLecteur()))
+        if (repository.existsByLecteurAndIsbn(pret.getLecteur(), pret.getIsbn()))
             return "Le pret existe déjà dans la base de données !";
 
         repository.save(pret);

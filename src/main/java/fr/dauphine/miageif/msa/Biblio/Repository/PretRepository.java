@@ -3,7 +3,7 @@ package fr.dauphine.miageif.msa.Biblio.Repository;
 import fr.dauphine.miageif.msa.Biblio.Pret;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public interface PretRepository extends JpaRepository<Pret, Long> {
@@ -18,5 +18,5 @@ public interface PretRepository extends JpaRepository<Pret, Long> {
 
     List<Pret> findAll();
 
-    boolean existsByLecteurAndIsbn(String isbn, Long lecteur);
+    boolean existsByLecteurAndIsbn( Long lecteur, String isbn);
 }
